@@ -58,7 +58,7 @@ let main filename _create_size =
       let n = ref 0 in
       List.iter (fun buf ->
           Printf.printf "%s" (Cstruct.to_string buf);
-          n := !n + (Cstruct.len buf)
+          n := !n + (Cstruct.length buf)
         ) datas;
       Printf.printf "\n%!";
       if !n <> file_size

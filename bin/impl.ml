@@ -180,7 +180,7 @@ let cat common filename path =
     let rec loop offset =
       Filesystem.read fs path offset 1024 >>*= fun bufs ->
       List.iter (fun x -> print_string (Cstruct.to_string x)) bufs;
-      let copied = List.fold_left (+) 0 (List.map Cstruct.len bufs) in
+      let copied = List.fold_left (+) 0 (List.map Cstruct.length bufs) in
       if copied < 1024
       then Lwt.return ()
       else loop (offset + copied)
