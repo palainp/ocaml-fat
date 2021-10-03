@@ -131,7 +131,7 @@ module Make (B: Mirage_block.S) = struct
     let sector_offset = Int64.(sub offset (mul sector_number (of_int bps))) in
     (* number of 512-byte FAT sectors per physical disk sectors *)
     let sectors_per_block = info.sector_size / bps in
-    let page = alloc 4096 in
+    let page = alloc 512 in (* was 4096, solo5 have a 1 block limit, a clever fix must be done *)
     let block_number = Int64.(div sector_number (of_int sectors_per_block)) in
     B.read device block_number [ page ] >>= function
     | Error e -> Lwt.return @@ Error (`Block_read e)
