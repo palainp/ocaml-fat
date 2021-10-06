@@ -93,7 +93,10 @@ module Make (B: Mirage_block.S) = struct
       else if Cstruct.length buf <= bps then [ buf ]
       else Cstruct.sub buf 0 bps :: (split (Cstruct.shift buf bps))
     in
-    let page = alloc bps in
+    (* this is a FIX for xen backend which suppose to have read/write
+     * operation on a page size base
+     *)
+    let page = alloc 4096 in (* was bps *)
     B.get_info device >>= fun {sector_size; _} ->
     let rec loop = function
       | []                     -> Lwt.return (Ok ())
