@@ -19,7 +19,7 @@ open Block
 
 module MemFS = Fat.Make(Mirage_block_combinators.Mem)
 
-let fail fmt = Fmt.kstrf Lwt.fail_with fmt
+let fail fmt = Fmt.kstr Lwt.fail_with fmt
 
 let (>>*=) m f = m >>= function
   | Error e -> fail "%a" MemFS.pp_write_error (e :> MemFS.write_error)

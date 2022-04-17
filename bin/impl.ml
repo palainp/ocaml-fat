@@ -22,7 +22,7 @@ open Common
    have specific code to handle is to 'fail' the Lwt thread with
    the exception Failure "user-readable message". *)
 
-let fail fmt = Fmt.kstrf Lwt.fail_with fmt
+let fail fmt = Fmt.kstr Lwt.fail_with fmt
 
 let (>>*=) m f = m >>= function
   | Error e -> fail "%a" Filesystem.pp_write_error (e :> Filesystem.write_error)

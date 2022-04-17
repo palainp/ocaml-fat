@@ -178,12 +178,12 @@ module Make (B: Mirage_block.S) = struct
     let get_fs sector =
       match Fat_boot_sector.unmarshal sector with
       | Error reason ->
-        Fmt.kstrf Lwt.fail_with
+        Fmt.kstr Lwt.fail_with
           "error unmarshalling first sector of block device: %s" reason
       | Ok boot ->
         match Fat_boot_sector.detect_format boot with
         | Error reason ->
-          Fmt.kstrf Lwt.fail_with
+          Fmt.kstr Lwt.fail_with
             "error detecting the format of block device: %s" reason
         | Ok format -> Lwt.return (boot, format)
     in
@@ -203,7 +203,7 @@ module Make (B: Mirage_block.S) = struct
     >>= function
     | Ok t    -> Lwt.return t
     | Error e ->
-      Fmt.kstrf Lwt.fail_with "error reading essential sectors: %a" pp_error e
+      Fmt.kstr Lwt.fail_with "error reading essential sectors: %a" pp_error e
 
   let disconnect _ = Lwt.return ()
 
